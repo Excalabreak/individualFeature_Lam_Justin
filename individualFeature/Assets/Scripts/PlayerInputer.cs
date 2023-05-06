@@ -28,13 +28,40 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
             ""id"": ""77753093-9a34-4793-a16d-8d55fa1e48e2"",
             ""actions"": [
                 {
-                    ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""22e337bc-e544-4098-99e7-f1f327580413"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""5a389ab5-0490-4371-958b-a8e809e83138"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""a39610a2-7470-45b6-a4c6-d40f720c2db2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""3fc92178-cfd5-4ba4-a574-dbbea9975549"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""51a533f2-3960-4834-b81d-d9765f2d12e7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""FrontPunch"",
@@ -84,61 +111,6 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""9e887ca2-225e-4000-8ea6-e3c126084252"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""67362680-a87f-46a4-b716-815a1609cebd"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""ab3c3541-2832-43c3-be30-485e97d0c847"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f260c33b-e947-4d28-9a20-77411ed8414a"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""8872dec5-6f82-44e9-ab99-8636f8a5389d"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""e5ade9c2-1a35-4156-81cc-2fba84d5df16"",
                     ""path"": ""<Keyboard>/j"",
@@ -152,7 +124,7 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0ee7e9a9-d6ad-4111-aa5d-6a871dbf722e"",
-                    ""path"": ""<Keyboard>/k"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -163,7 +135,7 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c04f218e-e0d7-4614-a941-2b8638f9166a"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -174,7 +146,7 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""214d4cd6-c3b6-42cb-813a-b4022fc9fdb5"",
-                    ""path"": ""<Keyboard>/semicolon"",
+                    ""path"": ""<Keyboard>/l"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -185,11 +157,55 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""66d86647-7dac-4483-bf3a-694fd5bd94ab"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""path"": ""<Keyboard>/semicolon"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Amp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""88ac13cd-1a36-4f1c-ad93-bae28bca038c"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bdce3c0-bd3e-4aa0-aa9d-800c3fcba451"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""89f91bc5-b77e-4c1d-99d3-339a61981f8f"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d575a0e4-2856-483f-9e3b-006d1b8f00c8"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -200,7 +216,10 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_Left = m_Player.FindAction("Left", throwIfNotFound: true);
+        m_Player_Right = m_Player.FindAction("Right", throwIfNotFound: true);
         m_Player_FrontPunch = m_Player.FindAction("FrontPunch", throwIfNotFound: true);
         m_Player_BackPunch = m_Player.FindAction("BackPunch", throwIfNotFound: true);
         m_Player_FrontKick = m_Player.FindAction("FrontKick", throwIfNotFound: true);
@@ -265,7 +284,10 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_Left;
+    private readonly InputAction m_Player_Right;
     private readonly InputAction m_Player_FrontPunch;
     private readonly InputAction m_Player_BackPunch;
     private readonly InputAction m_Player_FrontKick;
@@ -275,7 +297,10 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
     {
         private @PlayerInputer m_Wrapper;
         public PlayerActions(@PlayerInputer wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @Left => m_Wrapper.m_Player_Left;
+        public InputAction @Right => m_Wrapper.m_Player_Right;
         public InputAction @FrontPunch => m_Wrapper.m_Player_FrontPunch;
         public InputAction @BackPunch => m_Wrapper.m_Player_BackPunch;
         public InputAction @FrontKick => m_Wrapper.m_Player_FrontKick;
@@ -290,9 +315,18 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Left.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                @Left.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                @Left.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeft;
+                @Right.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
+                @Right.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
+                @Right.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRight;
                 @FrontPunch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFrontPunch;
                 @FrontPunch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFrontPunch;
                 @FrontPunch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFrontPunch;
@@ -312,9 +346,18 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Move.started += instance.OnMove;
-                @Move.performed += instance.OnMove;
-                @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
+                @Left.started += instance.OnLeft;
+                @Left.performed += instance.OnLeft;
+                @Left.canceled += instance.OnLeft;
+                @Right.started += instance.OnRight;
+                @Right.performed += instance.OnRight;
+                @Right.canceled += instance.OnRight;
                 @FrontPunch.started += instance.OnFrontPunch;
                 @FrontPunch.performed += instance.OnFrontPunch;
                 @FrontPunch.canceled += instance.OnFrontPunch;
@@ -336,7 +379,10 @@ public partial class @PlayerInputer : IInputActionCollection2, IDisposable
     public PlayerActions @Player => new PlayerActions(this);
     public interface IPlayerActions
     {
-        void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
         void OnFrontPunch(InputAction.CallbackContext context);
         void OnBackPunch(InputAction.CallbackContext context);
         void OnFrontKick(InputAction.CallbackContext context);
