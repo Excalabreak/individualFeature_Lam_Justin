@@ -7,13 +7,15 @@ public class PlayerInputScript : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 20f;
 
-    private bool noInput = true;
+    private bool noMoveInput = true;
+    private bool noAttackInput = true;
 
     private PlayerInputer pi;
     private Rigidbody rb;
 
     //newest input is last index
-    private List<MoveEnum> inputHistory = new List<MoveEnum>();
+    private List<MoveEnum> moveHistory = new List<MoveEnum>();
+    private List<AttackEnum> attackHistory = new List<AttackEnum>();
 
     private void Awake()
     {
@@ -29,12 +31,14 @@ public class PlayerInputScript : MonoBehaviour
 
     private void GetInputs()
     {
-        noInput = true;
+        noMoveInput = true;
+        noAttackInput = true;
+
         if (pi.Player.Crouch.ReadValue<float>() == 1)
         {
             speed = 0f;
             AddToInputHistory(MoveEnum.down);
-            noInput = false;
+            noMoveInput = false;
         }
         else
         {
@@ -46,25 +50,47 @@ public class PlayerInputScript : MonoBehaviour
         {
             rb.AddForce(Vector3.up * jump);
             AddToInputHistory(MoveEnum.up);
-            noInput = false;
+            noMoveInput = false;
         }
 
         if (pi.Player.Left.ReadValue<float>() == 1)
         {
             transform.position += Vector3.left * speed * Time.deltaTime;
             AddToInputHistory(HorDirection("left"));
-            noInput = false;
+            noMoveInput = false;
         }
         if (pi.Player.Right.ReadValue<float>() == 1)
         {
             transform.position += Vector3.right * speed * Time.deltaTime;
             AddToInputHistory(HorDirection("right"));
-            noInput = false;
+            noMoveInput = false;
         }
 
-        if (noInput)
+        if (noMoveInput)
         {
             AddToInputHistory(MoveEnum.noMove);
+        }
+
+        if (pi.Player.FrontPunch.ReadValue<float>() == 1)
+        {
+            noAttackInput = false;
+        }
+        else if (pi.Player.BackPunch.ReadValue<float>() == 1)
+        {
+            noAttackInput = false;
+        }
+        else if(pi.Player.FrontKick.ReadValue<float>() == 1)
+        {
+            noAttackInput = false;
+        }
+        else if(pi.Player.BackPunch.ReadValue<float>() == 1)
+        {
+            noAttackInput = false;
+        }
+
+        if (noAttackInput)
+        {
+            AddToInputHistory(AttackEnum.noAttack);
         }
     }
 
@@ -97,15 +123,29 @@ public class PlayerInputScript : MonoBehaviour
 
     private void AddToInputHistory(MoveEnum me)
     {
-        if (inputHistory.Count == 0 || inputHistory[inputHistory.Count-1] != me)
+        if (moveHistory.Count == 0 || moveHistory[moveHistory.Count-1] != me)
         {
-            inputHistory.Add(me);
+            moveHistory.Add(me);
         }
 
 
-        if(inputHistory.Count == 10)
+        if(moveHistory.Count == 10)
         {
-            inputHistory.RemoveAt(0);
+            moveHistory.RemoveAt(0);
+        }
+    }
+
+    private void AddToInputHistory(AttackEnum ae)
+    {
+        if (attackHistory.Count == 0 || attackHistory[attackHistory.Count - 1] != ae)
+        {
+            attackHistory.Add(ae);
+        }
+
+
+        if (attackHistory.Count == 10)
+        {
+            attackHistory.RemoveAt(0);
         }
     }
 }
