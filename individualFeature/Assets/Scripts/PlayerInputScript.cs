@@ -7,21 +7,50 @@ public class PlayerInputScript : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 20f;
 
+    [SerializeField] private GameObject fpHitBox;
+    [SerializeField] private GameObject bpHitBox;
+    [SerializeField] private GameObject fkHitBox;
+    [SerializeField] private GameObject bkHitBox;
+ 
     private bool noMoveInput = true;
     private bool noAttackInput = true;
+    private bool canAttack = true;
 
     private PlayerInputer pi;
     private Rigidbody rb;
 
     //newest input is last index
     private List<MoveEnum> moveHistory = new List<MoveEnum>();
+    //TODO: change this to attack data list OR add a new list
     private List<AttackEnum> attackHistory = new List<AttackEnum>();
+
+    [SerializeField] private AttackData[] attackList;
+    private AttackData nextAttack;
 
     private void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
         pi = new PlayerInputer();
         pi.Enable();
+
+        for (int i = 1; i < attackList.Length; i++)
+        {
+            AttackData key = attackList[i];
+
+            for (int j = i - 1; j >= 0; )
+            {
+                if (key.AttackName.CompareTo(attackList[j].AttackName) < 0)
+                {
+                    attackList[j + 1] = attackList[j];
+                    j--;
+                    attackList[j + 1] = key;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
     }
 
     private void Update()
@@ -91,6 +120,24 @@ public class PlayerInputScript : MonoBehaviour
         if (noAttackInput)
         {
             AddToInputHistory(AttackEnum.noAttack);
+        }
+    }
+
+    private void RegularAttack()
+    {
+
+    }
+
+    private void SpecialAttacks(string key)
+    {
+        switch (key)
+        {
+            case ("Spear"):
+                break;
+            case ("Hell Port"):
+                break;
+            default:
+                break;
         }
     }
 
