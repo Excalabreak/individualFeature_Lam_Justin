@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ef4070331080ce409d5949e29871873, type: 3}
-  m_Name: HingeKick
+  m_Name: TheDamned
   m_EditorClassIdentifier: 
-  attackName: HingeKick
-  startUpFrames: 11
-  activeFrames: 2
-  recoveryFrames: 25
-  cancelAdv: 16
-  damage: 5
-  attackHitBox: 3
+  attackName: TheDamned
+  startUpFrames: 13
+  activeFrames: 3
+  recoveryFrames: 20
+  cancelAdv: 17
+  damage: 3
+  attackHitBox: 1

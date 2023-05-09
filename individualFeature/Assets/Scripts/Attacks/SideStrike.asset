@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ef4070331080ce409d5949e29871873, type: 3}
-  m_Name: HingeKick
+  m_Name: SideStrike
   m_EditorClassIdentifier: 
-  attackName: HingeKick
-  startUpFrames: 11
+  attackName: SideStrike
+  startUpFrames: 8
   activeFrames: 2
-  recoveryFrames: 25
-  cancelAdv: 16
-  damage: 5
+  recoveryFrames: 14
+  cancelAdv: 15
+  damage: 1
   attackHitBox: 3

@@ -9,6 +9,7 @@ public class AttackData : ScriptableObject
     [SerializeField] private int startUpFrames;
     [SerializeField] private int activeFrames;
     [SerializeField] private int recoveryFrames;
+    [SerializeField] private int cancelAdv;
     [SerializeField] private int damage;
     [SerializeField] private AttackEnum attackHitBox;
 
@@ -30,6 +31,11 @@ public class AttackData : ScriptableObject
     public int RecoveryFrames
     {
         get { return recoveryFrames; }
+    }
+
+    public int CancelAdv
+    {
+        get { return cancelAdv; }
     }
 
     public int Damage
