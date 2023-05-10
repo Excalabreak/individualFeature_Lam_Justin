@@ -7,10 +7,7 @@ public class PlayerInputScript : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float jump = 20f;
 
-    [SerializeField] private GameObject fpHitBox;
-    [SerializeField] private GameObject bpHitBox;
-    [SerializeField] private GameObject fkHitBox;
-    [SerializeField] private GameObject bkHitBox;
+    [SerializeField] private GameObject hitBox;
  
     private bool noMoveInput = true;
     private bool noAttackInput = true;
@@ -22,7 +19,7 @@ public class PlayerInputScript : MonoBehaviour
     //newest input is last index
     private List<MoveEnum> moveHistory = new List<MoveEnum>();
     //TODO: change this to attack data list OR add a new list
-    private List<AttackEnum> attackHistory = new List<AttackEnum>();
+    private List<AttackData> attackHistory = new List<AttackData>();
 
     [SerializeField] private AttackData[] attackList;
     private AttackData nextAttack;
@@ -119,7 +116,7 @@ public class PlayerInputScript : MonoBehaviour
 
         if (noAttackInput)
         {
-            AddToInputHistory(AttackEnum.noAttack);
+            AddToInputHistory(GetAttackData("NoAttack"));
         }
     }
 
@@ -139,6 +136,31 @@ public class PlayerInputScript : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private AttackData GetAttackData(string key)
+    {
+        int left = 0;
+        int right = attackList.Length - 1;
+
+        while (left <= right)
+        {
+            int mid = (left + right) / 2;
+            if (key.CompareTo(attackList[mid].AttackName) == 0)
+            {
+                return attackList[mid];
+            }
+            else if (key.CompareTo(attackList[mid].AttackName) < 0)
+            {
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+        Debug.Log("ERROR COULD NOT FIND ACTUAL DATA");
+        return attackList[0];
     }
 
     private MoveEnum HorDirection(string direction)
@@ -173,6 +195,7 @@ public class PlayerInputScript : MonoBehaviour
         if (moveHistory.Count == 0 || moveHistory[moveHistory.Count-1] != me)
         {
             moveHistory.Add(me);
+            Debug.Log(me);
         }
 
 
@@ -182,11 +205,12 @@ public class PlayerInputScript : MonoBehaviour
         }
     }
 
-    private void AddToInputHistory(AttackEnum ae)
+    private void AddToInputHistory(AttackData ad)
     {
-        if (attackHistory.Count == 0 || attackHistory[attackHistory.Count - 1] != ae)
+        if (attackHistory.Count == 0 || attackHistory[attackHistory.Count - 1].AttackName != ad.AttackName)
         {
-            attackHistory.Add(ae);
+            attackHistory.Add(ad);
+            Debug.Log(ad.AttackName);
         }
 
 

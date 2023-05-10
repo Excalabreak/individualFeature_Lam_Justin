@@ -17,5 +17,6 @@ MonoBehaviour:
   activeFrames: 2
   recoveryFrames: 29
   cancelAdv: 21
+  hitAdv: 9
   damage: 3
   attackHitBox: 1

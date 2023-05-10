@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ef4070331080ce409d5949e29871873, type: 3}
-  m_Name: RisingCut
+  m_Name: NoAttack
   m_EditorClassIdentifier: 
-  attackName: RisingCut
-  startUpFrames: 15
-  activeFrames: 30
-  recoveryFrames: 35
-  cancelAdv: 21
-  hitAdv: 35
-  damage: 9
-  attackHitBox: 2
+  attackName: NoAttack
+  startUpFrames: 0
+  activeFrames: 0
+  recoveryFrames: 0
+  cancelAdv: 0
+  hitAdv: 0
+  damage: 0
+  attackHitBox: 0
