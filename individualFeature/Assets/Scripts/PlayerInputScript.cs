@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class PlayerInputScript : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    [SerializeField] private float origSpeed = 5f;
+    private float speed;
     [SerializeField] private float jump = 20f;
 
     [SerializeField] private GameObject hitBox;
+    private HitBoxScript hitBoxScript;
  
     private bool noMoveInput = true;
     private bool noAttackInput = true;
     private bool canAttack = true;
+    public bool isAttacking = false;
 
     private PlayerInputer pi;
     private Rigidbody rb;
 
     //newest input is last index
     private List<MoveEnum> moveHistory = new List<MoveEnum>();
-    //TODO: change this to attack data list OR add a new list
     private List<AttackData> attackHistory = new List<AttackData>();
 
     [SerializeField] private AttackData[] attackList;
-    private AttackData nextAttack;
 
     private void Awake()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
         pi = new PlayerInputer();
+        hitBoxScript = hitBox.GetComponent<HitBoxScript>();
         pi.Enable();
+        speed = origSpeed;
 
         for (int i = 1; i < attackList.Length; i++)
         {
@@ -52,7 +55,33 @@ public class PlayerInputScript : MonoBehaviour
 
     private void Update()
     {
+        CheckIsAttacking();
         GetInputs();
+        CheckCanAttack();
+    }
+
+    private void CheckIsAttacking()
+    {
+        if (hitBoxScript.CurState != AttackStateEnum.NoAttack)
+        {
+            isAttacking = true;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+    }    
+
+    private void CheckCanAttack()
+    {
+        if (hitBoxScript.CurState == AttackStateEnum.NoAttack || hitBoxScript.CanCancel)
+        {
+            canAttack = true;
+        }
+        else
+        {
+            canAttack = false;
+        }
     }
 
     private void GetInputs()
@@ -66,9 +95,13 @@ public class PlayerInputScript : MonoBehaviour
             AddToInputHistory(MoveEnum.down);
             noMoveInput = false;
         }
+        else if (isAttacking)
+        {
+            speed = 0f;
+        }
         else
         {
-            speed = 5f;
+            speed = origSpeed;
         }
 
         //very jank jump fix later
@@ -97,20 +130,149 @@ public class PlayerInputScript : MonoBehaviour
             AddToInputHistory(MoveEnum.noMove);
         }
 
-        if (pi.Player.FrontPunch.ReadValue<float>() == 1)
+        if (canAttack && pi.Player.FrontPunch.ReadValue<float>() == 1)
         {
+            if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "StraightPunch") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("TheDamned");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "EternalVengeance") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("Haunted");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "SpecterStrike") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("Banished");
+            }
+            else
+            {
+                if (CheckMoveHist(0, MoveEnum.back))
+                {
+                    RegularAttack("CutSlice");
+                }
+                else if (CheckMoveHist(0, MoveEnum.down))
+                {
+                    RegularAttack("LowJab");
+                }
+                else if (CheckMoveHist(0, MoveEnum.forward))
+                {
+                    if (CheckMoveHist(1, MoveEnum.back) || CheckMoveHist(2, MoveEnum.back) && CheckMoveHist(1, MoveEnum.noMove))
+                    {
+                        //special
+                        RegularAttack("Spear");
+                    }
+                    else
+                    {
+                        RegularAttack("LowJab");
+                    }
+                }
+                else
+                {
+                    RegularAttack("StraightPunch");
+                }
+            }
             noAttackInput = false;
         }
-        else if (pi.Player.BackPunch.ReadValue<float>() == 1)
+        else if (canAttack && pi.Player.BackPunch.ReadValue<float>() == 1)
         {
+            if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "TheDamned") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("Torment");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "Banished") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("DarkSoul");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "ShinStrike") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("InnerDemon");
+            }
+            else
+            {
+                if (CheckMoveHist(0, MoveEnum.back))
+                {
+                    RegularAttack("RisingCut");
+                }
+                else if (CheckMoveHist(0, MoveEnum.down))
+                {
+                    RegularAttack("RisingSpear");
+                }
+                else
+                {
+                    RegularAttack("SpecterStrike");
+                }
+            }
             noAttackInput = false;
         }
-        else if(pi.Player.FrontKick.ReadValue<float>() == 1)
+        else if(canAttack && pi.Player.FrontKick.ReadValue<float>() == 1)
         {
+            if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "EternalVengeance") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("TheKilling");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "InnerDemon") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("Soulless");
+            }
+            else
+            {
+                if (CheckMoveHist(0, MoveEnum.back))
+                {
+                    if (CheckMoveHist(1, MoveEnum.down))
+                    {
+                        //special
+                        RegularAttack("HellPort");
+                    }
+                    else
+                    {
+                        RegularAttack("FlipKick");
+                    }
+                }
+                else if (CheckMoveHist(0, MoveEnum.down))
+                {
+
+                    RegularAttack("SideStrike");
+                }
+                else if (CheckMoveHist(0, MoveEnum.forward))
+                {
+                    RegularAttack("FlickKick");
+                }
+                else
+                {
+                    RegularAttack("HingeKick");
+                }
+            }
             noAttackInput = false;
         }
-        else if(pi.Player.BackPunch.ReadValue<float>() == 1)
+        else if(canAttack && pi.Player.BackKick.ReadValue<float>() == 1)
         {
+            if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "CutSlice") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("EternalVengeance");
+            }
+            else if (CheckAttackHist(0, "NoAttack") && CheckAttackHist(1, "FlickKick") && hitBoxScript.CanCancel)
+            {
+                RegularAttack("FallingAshes");
+            }
+            else
+            {
+                if (CheckMoveHist(0, MoveEnum.back))
+                {
+                    RegularAttack("ScorpionSting");
+                }
+                else if (CheckMoveHist(0, MoveEnum.down))
+                {
+                    RegularAttack("QuickKick");
+                }
+                else if (CheckMoveHist(0, MoveEnum.forward))
+                {
+                    RegularAttack("ShinStrike");
+                }
+                else
+                {
+                    RegularAttack("StepKick");
+                }
+            }
             noAttackInput = false;
         }
 
@@ -120,9 +282,10 @@ public class PlayerInputScript : MonoBehaviour
         }
     }
 
-    private void RegularAttack()
+    private void RegularAttack(string atk)
     {
-
+        hitBoxScript.StartAttack(GetAttackData(atk));
+        AddToInputHistory(GetAttackData(atk));
     }
 
     private void SpecialAttacks(string key)
@@ -190,12 +353,34 @@ public class PlayerInputScript : MonoBehaviour
         return MoveEnum.noMove;
     }
 
+    // pos == latest input is 0
+    private bool CheckAttackHist(int pos, string atk)
+    {
+        if (attackHistory.Count - 1 - pos >= 0 && attackHistory[attackHistory.Count - 1 - pos].AttackName == atk)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool CheckMoveHist(int pos, MoveEnum move)
+    {
+        if (moveHistory.Count - 1 - pos >= 0 && moveHistory[moveHistory.Count - 1 - pos] == move)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void AddToInputHistory(MoveEnum me)
     {
         if (moveHistory.Count == 0 || moveHistory[moveHistory.Count-1] != me)
         {
             moveHistory.Add(me);
-            Debug.Log(me);
+            if (me != MoveEnum.noMove)
+            {
+                Debug.Log(me);
+            }
         }
 
 
@@ -210,7 +395,10 @@ public class PlayerInputScript : MonoBehaviour
         if (attackHistory.Count == 0 || attackHistory[attackHistory.Count - 1].AttackName != ad.AttackName)
         {
             attackHistory.Add(ad);
-            Debug.Log(ad.AttackName);
+            if (ad.AttackName != "NoAttack")
+            {
+                Debug.Log(ad.AttackName);
+            }
         }
 
 
